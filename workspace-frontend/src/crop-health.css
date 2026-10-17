@@ -1,0 +1,25 @@
+.scan-file-details{flex:1;min-width:150px}
+.scan-file-details strong,.scan-file-details span{display:block}
+.scan-file-details strong{font-size:10px;overflow-wrap:anywhere}
+.scan-file-details span{font-size:8px;color:#849083;margin-top:5px}
+.scan-preview>.btn{display:inline-flex;align-items:center;gap:7px}
+.scan-preview>.btn:disabled{opacity:.65;cursor:wait}
+.scan-spinner{animation:scan-spin .9s linear infinite}
+.scan-message{display:flex;align-items:flex-start;gap:8px;border-radius:10px;padding:11px 13px;margin-top:13px;font-size:11px;line-height:1.55}
+.scan-error{background:#fff1ef;color:#a3291d;border:1px solid #f4c8c1}
+.scan-error svg{flex-shrink:0;margin-top:1px}
+.scan-result{margin-top:14px;padding:16px;border:1px solid #cfe2c8;border-radius:12px;background:#f6fbf3}
+.scan-result-heading,.scan-result-heading>div{display:flex;align-items:center;gap:8px}
+.scan-result-heading{justify-content:space-between}
+.scan-result-heading>div{color:var(--leaf)}
+.scan-result-heading h3{font-family:Poppins,sans-serif;font-size:13px;margin:0}
+.scan-result-heading>span{font-size:11px;font-weight:700;color:var(--deep)}
+.scan-disease-name{font-size:16px;font-weight:700;margin:13px 0 4px}
+.scan-class-name{font-size:10px;color:var(--muted);overflow-wrap:anywhere}
+.scan-top-predictions{margin-top:15px;padding-top:12px;border-top:1px solid var(--line)}
+.scan-top-predictions h4{font-size:10px;margin:0 0 8px;color:var(--muted)}
+.scan-top-predictions ul{list-style:none;padding:0;margin:0}
+.scan-top-predictions li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-size:10px}
+.scan-top-predictions li span:last-child{font-weight:700;white-space:nowrap}
+@keyframes scan-spin{to{transform:rotate(360deg)}}
+@media(max-width:520px){.scan-preview{align-items:flex-start}.scan-preview>.btn{width:100%;justify-content:center}.scan-result-heading{align-items:flex-start;flex-direction:column;gap:5px}}
