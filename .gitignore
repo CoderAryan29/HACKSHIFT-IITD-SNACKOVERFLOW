@@ -1,2 +1,34 @@
-.venv/
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.env.local
+
+# Python environments and caches
 venv/
+.venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local reference project and generated artifacts
+/agent/
+*.log
+
+# IDE and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Build and packaging artifacts
+dist/
+build/
+*.egg-info/
