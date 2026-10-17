@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+pydantic
+langgraph
+langchain-google-genai
+langsmith
+langgraph-checkpoint-postgres
+psycopg[binary,pool]
+sqlalchemy
+python-dotenv
+httpx
