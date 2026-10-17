@@ -13,6 +13,7 @@ import {
 import { listings, prices, priceHistory, schemes, type Page } from "./data";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import CropHealthPage from "./CropHealthPage";
+import LandingPage from "./LandingPage";
 
 const nav: { label: Page; icon: any; group?: string }[] = [
   { label: "Home", icon: LayoutDashboard },
@@ -30,6 +31,7 @@ function money(n: number) { return "₹" + n.toLocaleString("en-IN"); }
 
 export default function App() {
   const [page, setPage] = useState<Page>("Home");
+  const [showLanding, setShowLanding] = useState(true);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [language, setLanguage] = useState<"EN" | "हिं">("EN");
   const [role, setRole] = useState<"farmer" | "buyer">("farmer");
@@ -76,6 +78,12 @@ export default function App() {
     setShowMore(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+  function enterDashboard(next: Page = "Home") {
+    setPage(next);
+    setShowLanding(false);
+    setMobileMenu(false);
+    window.scrollTo(0, 0);
+  }
   function publishListing(e: React.FormEvent) {
     e.preventDefault();
     const newItem = {
@@ -103,6 +111,18 @@ export default function App() {
   }
   const isHi = language === "हिं";
   const titleFor = (label: Page) => isHi ? ({ Home: "होम", Marketplace: "बाज़ार", Prices: "भाव", Schemes: "सरकारी योजनाएँ", "My Farm": "मेरा खेत", "Ask KisanSetu": "किसानसेतु से पूछें", "Crop Health": "फसल स्वास्थ्य", "Legal Aid": "कानूनी सहायता", Settings: "और" } as any)[label] : label;
+
+  if (showLanding) {
+    return (
+      <LandingPage
+        onNavigate={enterDashboard}
+        onOpenAccount={() => {
+          enterDashboard("Settings");
+          notify("Sign-in is not available yet. Opening your account settings.");
+        }}
+      />
+    );
+  }
 
   return (
     <div className="app">
