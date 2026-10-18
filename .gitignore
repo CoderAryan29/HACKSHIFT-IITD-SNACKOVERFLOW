@@ -33,3 +33,8 @@ Thumbs.db
 dist/
 build/
 *.egg-info/
+
+# Firebase service-account credentials
+firebase-service-account*.json
+*-firebase-adminsdk-*.json
+*service-account*.json

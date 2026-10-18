@@ -1,0 +1,41 @@
+.account-page{min-height:100svh;display:grid;place-items:center;padding:28px;background:radial-gradient(ellipse at 15% 10%,rgba(176,205,148,.32),transparent 34%),linear-gradient(135deg,#f8f7ef,#edf4e8 55%,#e4eee0)}
+.account-card{width:min(100%,490px);min-height:480px;position:relative;background:rgba(255,255,255,.96);border:1px solid rgba(218,228,214,.9);border-radius:26px;padding:34px 38px;box-shadow:0 24px 80px rgba(32,67,38,.13)}
+.account-back{display:inline-flex;align-items:center;gap:7px;border:0;background:none;color:#68756a;font-size:12px;padding:3px 0}
+.account-back:hover{color:#1b5e20}
+.account-brand{display:flex;align-items:center;gap:11px;margin:30px 0 32px}
+.account-brand-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:15px;background:#e8f3e3;color:#236c2b}
+.account-brand strong,.account-brand small{display:block}
+.account-brand strong{font-family:Poppins,sans-serif;font-size:20px;letter-spacing:-.5px;color:#1e3922}
+.account-brand small{font-size:10px;color:#7d887c;margin-top:2px}
+.account-content h1{font-family:Poppins,sans-serif;color:#1e3922;font-size:27px;line-height:1.25;letter-spacing:-.8px;margin:6px 0 10px}
+.account-content>p{color:#6e7b6e;font-size:13px;line-height:1.65;margin:0 0 23px}
+.account-eyebrow{font-size:9px;color:#2e7d32;font-weight:700;letter-spacing:1.25px}
+.account-notice,.account-error{padding:12px 13px;border-radius:11px;font-size:11px;line-height:1.55;margin:15px 0}
+.account-notice{color:#58664e;background:#f4f6e9;border:1px solid #e5e9d1}
+.account-notice code{font-size:10px;color:#284f2c}
+.account-error{color:#9a332c;background:#fff3f0;border:1px solid #f4d4ce}
+.google-sign-in{width:100%;height:48px;display:flex;align-items:center;justify-content:center;gap:11px;border:1px solid #d7ded5;border-radius:12px;background:#fff;color:#26332a;font-size:13px;font-weight:600;box-shadow:0 3px 9px rgba(27,51,30,.045);transition:border-color .18s,box-shadow .18s}
+.google-sign-in:hover:not(:disabled){border-color:#a7c5a0;box-shadow:0 7px 18px rgba(27,75,33,.1)}
+.google-sign-in:disabled{opacity:.55;cursor:not-allowed}
+.google-mark{width:19px;height:19px}
+.account-privacy{text-align:center;font-size:10px!important;color:#8b9589!important;margin:17px 0 0!important}
+.account-loading{min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.account-loading h1{margin-top:18px}
+.account-spinner{animation:account-spin .8s linear infinite;color:#2e7d32}
+.account-role-options{display:grid;gap:10px;margin:18px 0}
+.account-role-options>button{width:100%;display:grid;grid-template-columns:42px 1fr 18px;align-items:center;gap:12px;text-align:left;padding:13px;border:1px solid #e2e8df;border-radius:13px;background:#fff;color:#4b5b4c;transition:background .16s,border-color .16s}
+.account-role-options>button:hover:not(:disabled){border-color:#9fc39c;background:#f7faf5}
+.account-role-options>button>svg{color:#34823a;opacity:0}
+.account-role-options>button:hover>svg{opacity:1}
+.account-role-icon{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:#e9f4e5;color:#32783a}
+.account-role-icon.buyer{background:#edf1fa;color:#536ca5}
+.account-role-options strong,.account-role-options small{display:block}
+.account-role-options strong{font-size:12px;color:#273a2a}
+.account-role-options small{font-size:10px;line-height:1.45;color:#7b867b;margin-top:4px}
+.account-user-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:14px;border-top:1px solid #edf0eb;color:#778176;font-size:10px}
+.account-user-row button,.account-retry{display:inline-flex;align-items:center;gap:5px;color:#58725a;border:0;background:none;font-size:10px;padding:4px}
+.account-saving{display:flex;align-items:center;justify-content:center;gap:7px;font-size:11px!important;color:#5d765e!important;margin:12px 0 0!important}
+.account-retry{margin:12px auto 0}
+@keyframes account-spin{to{transform:rotate(360deg)}}
+@media(max-width:520px){.account-page{padding:15px}.account-card{padding:26px 22px;min-height:0;border-radius:21px}.account-brand{margin:24px 0}.account-content h1{font-size:24px}.account-user-row{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.account-spinner{animation-duration:1.8s}}

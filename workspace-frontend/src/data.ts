@@ -1,10 +1,10 @@
 export type Page = "Home" | "Marketplace" | "Prices" | "Schemes" | "My Farm" | "Ask KisanSetu" | "Crop Health" | "Legal Aid" | "Settings";
 
 export const listings = [
-  { id: 1, crop: "Tomatoes", hindi: "टमाटर", variety: "Fresh harvest · Grade A", quantity: 42, price: 1850, location: "Sonipat, Haryana", distance: "28 km", date: "Available today", image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=800&q=85", seller: "Ramesh Kumar", bids: 4, tag: "4 offers received" },
-  { id: 2, crop: "Potatoes", hindi: "आलू", variety: "Farm sorted · Medium size", quantity: 80, price: 1250, location: "Meerut, Uttar Pradesh", distance: "54 km", date: "Available tomorrow", image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=85", seller: "Suresh Pal", bids: 2, tag: "2 offers received" },
-  { id: 3, crop: "Onions", hindi: "प्याज़", variety: "Dry onion · Well cured", quantity: 35, price: 2200, location: "Gurugram, Haryana", distance: "19 km", date: "Available in 2 days", image: "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=85", seller: "Sunita Devi", bids: 3, tag: "Popular near you" },
-  { id: 4, crop: "Wheat", hindi: "गेहूँ", variety: "Cleaned grain", quantity: 120, price: 2425, location: "Baghpat, Uttar Pradesh", distance: "67 km", date: "Available today", image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=85", seller: "Demo farmer", bids: 1, tag: "DEMO LISTING" }
+  { id: 1, crop: "Potatoes", hindi: "आलू", variety: "Freshly harvested · Farm sorted", quantity: 5, price: 1250, location: "Saharanpur, Uttar Pradesh", distance: "Nearby", date: "Ready for pickup", image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=85", seller: "Rohan · sample farmer", bids: 0, tag: "SAMPLE LISTING" },
+  { id: 2, crop: "Tomatoes", hindi: "टमाटर", variety: "Fresh harvest · Grade A", quantity: 12, price: 1850, location: "Sonipat, Haryana", distance: "Nearby", date: "Available today", image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=800&q=85", seller: "Meena · sample farmer", bids: 0, tag: "SAMPLE LISTING" },
+  { id: 3, crop: "Onions", hindi: "प्याज़", variety: "Dry onion · Well cured", quantity: 8, price: 2200, location: "Gurugram, Haryana", distance: "Nearby", date: "Available in 2 days", image: "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=85", seller: "Imran · sample farmer", bids: 0, tag: "SAMPLE LISTING" },
+  { id: 4, crop: "Wheat", hindi: "गेहूँ", variety: "Cleaned grain", quantity: 25, price: 2425, location: "Baghpat, Uttar Pradesh", distance: "Nearby", date: "Ready for pickup", image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=85", seller: "Kavita · sample farmer", bids: 0, tag: "SAMPLE LISTING" }
 ];
 
 export const schemes = [
@@ -17,6 +17,18 @@ export const prices = [
   { crop: "Tomato", mandi: "Azadpur Mandi", price: 1850, change: 4.2, date: "18 Oct 2026" },
   { crop: "Potato", mandi: "Ghaziabad Mandi", price: 1250, change: -1.4, date: "18 Oct 2026" },
   { crop: "Onion", mandi: "Ghazipur Mandi", price: 2200, change: 2.8, date: "18 Oct 2026" }
+];
+
+export const mandiPriceSamples = [
+  { crop: "Tomato", mandi: "Azadpur Mandi", price: 1850 },
+  { crop: "Tomato", mandi: "Ghaziabad Mandi", price: 1780 },
+  { crop: "Tomato", mandi: "Ghazipur Mandi", price: 1910 },
+  { crop: "Potato", mandi: "Azadpur Mandi", price: 1320 },
+  { crop: "Potato", mandi: "Ghaziabad Mandi", price: 1250 },
+  { crop: "Potato", mandi: "Ghazipur Mandi", price: 1290 },
+  { crop: "Onion", mandi: "Azadpur Mandi", price: 2140 },
+  { crop: "Onion", mandi: "Ghaziabad Mandi", price: 2260 },
+  { crop: "Onion", mandi: "Ghazipur Mandi", price: 2200 }
 ];
 
 export const priceHistory = [

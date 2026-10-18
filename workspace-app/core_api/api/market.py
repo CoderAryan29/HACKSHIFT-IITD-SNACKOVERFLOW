@@ -58,8 +58,14 @@ def get_price_records(
     )
 
     if commodity:
+        normalized_commodity = func.regexp_replace(
+            func.lower(func.trim(MandiPrice.commodity)), "(es|s)$", ""
+        )
+        normalized_search = func.regexp_replace(
+            func.lower(func.trim(commodity.strip())), "(es|s)$", ""
+        )
         query = query.filter(
-            func.lower(MandiPrice.commodity) == commodity.strip().lower()
+            normalized_commodity == normalized_search
         )
 
     if mandi_id is not None:

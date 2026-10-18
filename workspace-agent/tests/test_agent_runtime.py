@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from contextlib import contextmanager
 from uuid import uuid4
 
 from langchain_core.messages import AIMessage
@@ -8,19 +9,21 @@ import pytest
 from sqlalchemy.exc import IntegrityError
 
 from agent_service.graph.builder import build_agent
-from agent_service.config import ConfigurationError, configure_langsmith
-from agent_service.api.chat import ChatRequest, _chat_stream
+from agent_service.config import ConfigurationError, configure_langsmith, gemini_model
+from agent_service.api.chat import ChatRequest, _chat_stream, _message_content
 from agent_service.graph.runtime import get_checkpointer
 from agent_service.tools.price_tools import get_mandi_prices_tool
 from agent_service.tools.weather_tools import get_weather_tool
 from agent_service.tools.geocoding import geocode_location
+from agent_service.tools.thread_tools import Thread
 
 
 class FakeModel:
     def bind_tools(self, _tools):
         return self
 
-    def invoke(self, _messages):
+    def invoke(self, _messages, config=None):
+        del config
         return AIMessage(content="उत्तर तैयार है।")
 
 
@@ -34,6 +37,27 @@ def test_single_agent_graph_compiles_and_terminates(monkeypatch) -> None:
     )
 
     assert result["messages"][-1].content == "उत्तर तैयार है।"
+
+
+def test_thread_model_metadata_does_not_require_users_mapping() -> None:
+    assert Thread.__table__ in Thread.metadata.sorted_tables
+
+
+def test_message_content_extracts_text_without_provider_metadata() -> None:
+    message = AIMessage(
+        content=[
+            {
+                "type": "text",
+                "text": "Hello! I am KisanSetu.",
+                "extras": {"signature": "provider-signature"},
+            }
+        ]
+    )
+
+    result = _message_content(message)
+
+    assert result == "Hello! I am KisanSetu."
+    assert "provider-signature" not in result
 
 
 def test_weather_tool_returns_real_provider_payload(monkeypatch) -> None:
@@ -123,11 +147,61 @@ def test_price_tool_validates_query_before_database_access() -> None:
     assert result == {"error": "commodity is required"}
 
 
+def test_price_tool_filters_by_mandi_and_matches_plural_commodity(monkeypatch) -> None:
+    class FakeResult:
+        def mappings(self):
+            return self
+
+        def all(self):
+            return [{"commodity": "Tomato", "mandi": "Azadpur", "modal_price": 1800}]
+
+    class FakeDatabase:
+        statement = ""
+        parameters = {}
+
+        def execute(self, statement, parameters):
+            self.statement = str(statement)
+            self.parameters = parameters
+            return FakeResult()
+
+    database = FakeDatabase()
+
+    @contextmanager
+    def fake_session_scope():
+        yield database
+
+    monkeypatch.setattr(
+        "agent_service.tools.price_tools.session_scope", fake_session_scope
+    )
+
+    result = get_mandi_prices_tool.invoke(
+        {
+            "commodity": "tomatoes",
+            "mandi_name": "Azadpur",
+            "district": "North Delhi",
+            "days": 14,
+        }
+    )
+
+    assert result["prices"][0]["mandi"] == "Azadpur"
+    assert "JOIN mandis AS m" in database.statement
+    assert "regexp_replace(lower(trim(p.commodity))" in database.statement
+    assert database.parameters["mandi_name"] == "%Azadpur%"
+    assert database.parameters["district"] == "%North Delhi%"
+    assert database.parameters["days"] == 14
+
+
 def test_langsmith_tracing_is_disabled_by_default(monkeypatch) -> None:
     monkeypatch.delenv("LANGCHAIN_TRACING_V2", raising=False)
     monkeypatch.delenv("LANGCHAIN_API_KEY", raising=False)
 
     assert configure_langsmith() is False
+
+
+def test_gemini_model_uses_configured_model(monkeypatch) -> None:
+    monkeypatch.setenv("GEMINI_MODEL", "gemini-3.8-flash")
+
+    assert gemini_model() == "gemini-3.8-flash"
 
 
 def test_langsmith_tracing_requires_api_key_when_enabled(monkeypatch) -> None:
@@ -149,12 +223,11 @@ def test_chat_reports_missing_database_user(monkeypatch) -> None:
     request = ChatRequest(
         message="hello",
         thread_id="thread-test",
-        user_uid="missing-user",
         lang="en",
     )
 
     async def collect() -> list[str]:
-        return [event async for event in _chat_stream(request)]
+        return [event async for event in _chat_stream(request, "missing-user")]
 
     import asyncio
 
@@ -167,12 +240,9 @@ def test_chat_uses_sync_stream_for_postgres_checkpointer(monkeypatch) -> None:
     class FakeAgent:
         def stream(self, _state, config, stream_mode):
             assert config["configurable"]["thread_id"] == "thread-stream"
-            assert stream_mode == "updates"
-            yield {
-                "agent": {
-                    "messages": [AIMessage(content="Test response")]
-                }
-            }
+            assert stream_mode == ["updates", "messages"]
+            yield ("messages", (AIMessage(content="Test response"), {"langgraph_node": "agent"}))
+            yield ("updates", {"agent": {"messages": [AIMessage(content="Test response")]}})
 
     monkeypatch.setattr(
         "agent_service.api.chat.ensure_thread_record",
@@ -183,12 +253,11 @@ def test_chat_uses_sync_stream_for_postgres_checkpointer(monkeypatch) -> None:
     request = ChatRequest(
         message="hello",
         thread_id="thread-stream",
-        user_uid="user-stream",
         lang="en",
     )
 
     async def collect() -> list[str]:
-        return [event async for event in _chat_stream(request)]
+        return [event async for event in _chat_stream(request, "user-stream")]
 
     import asyncio
 
@@ -199,7 +268,8 @@ def test_chat_uses_sync_stream_for_postgres_checkpointer(monkeypatch) -> None:
 
 def test_postgres_checkpointer_persists_graph_state(monkeypatch) -> None:
     class PersistentFakeModel(FakeModel):
-        def invoke(self, messages):
+        def invoke(self, messages, config=None):
+            del config
             return AIMessage(content=f"messages={len(messages)}")
 
     monkeypatch.setattr(

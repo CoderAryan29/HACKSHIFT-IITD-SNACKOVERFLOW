@@ -4,7 +4,7 @@ import threading
 import warnings
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import APIRouter, FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from PIL import Image, UnidentifiedImageError
@@ -24,24 +24,30 @@ EXTENSION_FORMATS = {
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    app.state.interpreter = None
-    app.state.labels = None
-    app.state.inference_lock = threading.Lock()
-    app.state.model_error = None
-    try:
-        app.state.interpreter, app.state.labels = load_model()
-    except ModelLoadError as exc:
-        app.state.model_error = str(exc)
+    initialize_model_state(app.state)
     yield
 
 
+def initialize_model_state(state) -> None:
+    state.interpreter = None
+    state.labels = None
+    state.inference_lock = threading.Lock()
+    state.model_error = None
+    try:
+        state.interpreter, state.labels = load_model()
+    except ModelLoadError as exc:
+        state.model_error = str(exc)
+
+
 app = FastAPI(title="KisanSetu Crop Disease API", lifespan=lifespan)
+router = APIRouter()
 
 allowed_origins = [
     origin.strip()
     for origin in os.getenv(
         "KISANSETU_CORS_ORIGINS",
-        "http://localhost:5173,http://127.0.0.1:5173",
+        "http://localhost:5173,http://127.0.0.1:5173,"
+        "http://localhost:5174,http://127.0.0.1:5174",
     ).split(",")
     if origin.strip()
 ]
@@ -60,15 +66,14 @@ def _display_name(class_name: str) -> str:
     return f"{crop.replace('_', ' ').strip()} {disease.replace('_', ' ').strip()}"
 
 
-@app.get("/health")
-def health():
-    if app.state.interpreter is None or app.state.model_error:
+def model_health(state):
+    if state.interpreter is None or state.model_error:
         return JSONResponse(
             status_code=503,
             content={
                 "ready": False,
                 "model_ready": False,
-                "detail": app.state.model_error or "Disease model is not loaded.",
+                "detail": state.model_error or "Disease model is not loaded.",
             },
         )
     return {
@@ -78,12 +83,23 @@ def health():
     }
 
 
-@app.post("/predict")
-def predict(file: UploadFile = File(...)):
-    if app.state.interpreter is None or app.state.model_error:
+@app.get("/health")
+def standalone_health(request: Request):
+    return model_health(request.app.state)
+
+
+@router.get("/health/ml")
+def health(request: Request):
+    return model_health(request.app.state)
+
+
+@router.post("/predict")
+def predict(request: Request, file: UploadFile = File(...)):
+    state = request.app.state
+    if state.interpreter is None or state.model_error:
         raise HTTPException(
             status_code=503,
-            detail=app.state.model_error or "Disease model is not loaded.",
+            detail=state.model_error or "Disease model is not loaded.",
         )
 
     filename = file.filename or ""
@@ -135,8 +151,8 @@ def predict(file: UploadFile = File(...)):
         ) from exc
 
     try:
-        with app.state.inference_lock:
-            predictions = predict_image(leaf_image, app.state.interpreter, app.state.labels)
+        with state.inference_lock:
+            predictions = predict_image(leaf_image, state.interpreter, state.labels)
     except (RuntimeError, ValueError, OSError) as exc:
         raise HTTPException(status_code=500, detail=f"Disease model inference failed: {exc}") from exc
 
@@ -157,3 +173,6 @@ def predict(file: UploadFile = File(...)):
         "top_predictions": top_predictions,
         "model_used": f"{MODEL_ID}:tflite",
     }
+
+
+app.include_router(router)

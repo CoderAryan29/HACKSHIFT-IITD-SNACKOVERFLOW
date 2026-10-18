@@ -10,6 +10,7 @@ def get_model() -> ChatGoogleGenerativeAI:
         model=gemini_model(),
         google_api_key=google_api_key(),
         temperature=0,
-        timeout=30,
-        max_retries=2,
+        timeout=20,
+        max_retries=1,
+        streaming=True,
     )

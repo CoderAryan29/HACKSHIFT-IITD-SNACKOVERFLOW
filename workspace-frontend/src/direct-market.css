@@ -1,0 +1,65 @@
+.direct-market-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:4px 0 2px}
+.direct-market-eyebrow{display:flex;align-items:center;gap:7px;color:#378044;font-size:9px;font-weight:750;letter-spacing:1.25px}
+.direct-market-heading h1{font-family:Poppins,sans-serif;font-size:clamp(25px,3vw,38px);letter-spacing:-1.2px;line-height:1.18;color:#183a21;margin:10px 0 8px}
+.direct-market-heading p{max-width:690px;color:#6b786d;font-size:12px;line-height:1.7;margin:0}
+.direct-market-basket-button,.direct-market-list-button{height:44px;flex-shrink:0;display:inline-flex;align-items:center;gap:9px;padding:0 15px;border:1px solid #d9e5d5;border-radius:12px;background:#fff;color:#295f32;font-size:11px;font-weight:700;box-shadow:0 5px 15px rgba(28,43,31,.045)}
+.direct-market-basket-button:hover,.direct-market-list-button:hover{background:#f1f7ee;border-color:#a8c8a3}
+.direct-market-basket-button span{min-width:21px;height:21px;display:grid;place-items:center;border-radius:50%;background:#2e7d32;color:#fff;font-size:10px}
+.direct-market-list-button{background:#2e7d32;color:#fff;border-color:#2e7d32}
+.direct-market-list-button:hover{background:#1b5e20;color:#fff}
+.direct-market-intro{display:flex;align-items:center;gap:13px;padding:16px 18px;border:1px solid #e0eadb;border-radius:15px;background:linear-gradient(105deg,#edf5e9,#f8faf5)}
+.direct-market-intro-icon{width:42px;height:42px;flex-shrink:0;display:grid;place-items:center;border-radius:13px;background:#dfeedd;color:#347a3b}
+.direct-market-intro>div:nth-child(2){min-width:0;flex:1}
+.direct-market-intro strong{color:#26472b;font-size:12px}
+.direct-market-intro p{color:#718071;font-size:10px;line-height:1.55;margin:4px 0 0}
+.direct-market-sample-label{flex-shrink:0;padding:6px 8px;border-radius:6px;background:#fff4dc;color:#93631b;font-size:8px;font-weight:800;letter-spacing:.8px}
+.direct-market-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.direct-market-tools .search-box{flex:1;min-width:220px}
+.direct-market-tools>select{min-height:41px;min-width:138px;border:1px solid #dfe6dc;border-radius:10px;background:#fff;color:#536154;padding:0 12px;font-size:11px}
+.direct-market-result-count{margin-left:auto;color:#7a8679;font-size:10px}
+.direct-market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.direct-produce-card{overflow:hidden;min-width:0;border:1px solid #e3e8df;border-radius:16px;background:#fff;box-shadow:0 5px 18px rgba(28,43,31,.035);transition:transform .18s,border-color .18s,box-shadow .18s}
+.direct-produce-card:hover{transform:translateY(-2px);border-color:#c5d9c0;box-shadow:0 12px 25px rgba(28,43,31,.08)}
+.direct-produce-image{position:relative;display:block;width:100%;height:164px;border:0;border-radius:0;background-size:cover;background-position:center}
+.direct-produce-image:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(20,35,23,.28));pointer-events:none}
+.direct-sample-tag{position:absolute;z-index:1;left:12px;top:12px;padding:6px 8px;border:1px solid rgba(255,255,255,.8);border-radius:6px;background:rgba(255,255,255,.93);color:#6e571c;font-size:8px;font-weight:800;letter-spacing:.7px}
+.direct-produce-body{padding:14px}
+.direct-produce-seller{display:flex;align-items:center;gap:9px;padding-bottom:12px;border-bottom:1px solid #edf0eb}
+.direct-farmer-avatar{width:34px;height:34px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;background:#e8f3e3;color:#347a3b;font-size:12px;font-weight:800}
+.direct-produce-seller strong,.direct-produce-seller small{display:flex;align-items:center}
+.direct-produce-seller strong{color:#334335;font-size:10px}
+.direct-produce-seller small{gap:4px;color:#819080;font-size:9px;margin-top:4px}
+.direct-produce-title{display:flex;align-items:baseline;gap:8px;margin-top:11px}
+.direct-produce-title h2{margin:0;color:#1f3823;font-family:Poppins,sans-serif;font-size:18px;letter-spacing:-.35px}
+.direct-produce-title>span{color:#8c988b;font-size:10px}
+.direct-produce-variety{min-height:29px;color:#788477;font-size:9px;line-height:1.5;margin:4px 0 10px}
+.direct-produce-quantity{display:flex;align-items:center;gap:7px;padding:9px 0;border-top:1px solid #edf0eb;border-bottom:1px solid #edf0eb;color:#718071;font-size:9px}
+.direct-produce-quantity>strong{color:#364938;font-size:10px}
+.direct-ready{display:flex;align-items:center;gap:5px;margin-left:auto;text-align:right}
+.direct-ready i{width:6px;height:6px;border-radius:50%;background:#63a66a}
+.direct-produce-price{display:flex;flex-direction:column;gap:3px;padding:11px 0 10px}
+.direct-produce-price>span{color:#869185;font-size:9px}
+.direct-produce-price>strong{color:#1d632c;font-family:Poppins,sans-serif;font-size:20px;letter-spacing:-.45px}
+.direct-produce-price small{margin-left:4px;color:#7e8c7d;font:500 9px "Noto Sans",sans-serif;letter-spacing:0}
+.direct-card-action{width:100%;height:39px;display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid #2e7d32;border-radius:9px;background:#2e7d32;color:#fff;font-size:10px;font-weight:700;transition:background .15s}
+.direct-card-action:hover{background:#1b5e20}
+.direct-card-action.farmer-action{border-color:#dbe6d7;background:#f7faf5;color:#356f3c}
+.direct-card-action.farmer-action:hover{background:#edf5e9}
+.direct-market-disclaimer{display:flex;align-items:flex-start;gap:9px;padding:11px 13px;border:1px solid #eee3c8;border-radius:11px;background:#fffaf0;color:#81734e;font-size:9px;line-height:1.55}
+.direct-market-disclaimer svg{flex-shrink:0;color:#9a762d}
+.direct-market-disclaimer strong{color:#6e5721}
+.direct-basket-modal{max-width:580px}
+.direct-basket-lines{display:grid;gap:0;margin:4px 0 12px}
+.direct-basket-line{display:grid;grid-template-columns:minmax(90px,1fr) auto auto;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #edf0eb}
+.direct-basket-line>div:first-child{min-width:0}
+.direct-basket-line>div:first-child strong,.direct-basket-line>div:first-child small{display:block}
+.direct-basket-line>div:first-child strong{font-size:11px;color:#304232}
+.direct-basket-line>div:first-child small{margin-top:4px;color:#7a8679;font-size:9px}
+.direct-basket-line>strong{font-size:11px;color:#2c5e33}
+.direct-basket-quantity{display:flex;align-items:center;gap:8px;color:#536354;font-size:10px;white-space:nowrap}
+.direct-basket-quantity button{width:25px;height:25px;border:1px solid #dbe5d8;border-radius:7px;background:#f7faf5;color:#376f3d;font-size:16px;line-height:1}
+.direct-basket-total{display:flex;justify-content:space-between;align-items:center;padding:8px 0;color:#667365;font-size:11px}
+.direct-basket-total strong{color:#1d632c;font-family:Poppins,sans-serif;font-size:20px}
+.direct-basket-disclaimer{margin:6px 0 14px;color:#8a7960;font-size:9px;line-height:1.5}
+@media(max-width:1050px){.direct-market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.direct-market-heading{align-items:flex-start;flex-direction:column}.direct-market-heading h1{font-size:27px}.direct-market-basket-button,.direct-market-list-button{width:100%;justify-content:center}.direct-market-intro{align-items:flex-start;flex-wrap:wrap;padding:13px}.direct-market-intro>div:nth-child(2){width:calc(100% - 56px);flex:unset}.direct-market-sample-label{margin-left:55px}.direct-market-tools{align-items:stretch}.direct-market-tools .search-box{min-width:100%}.direct-market-tools>select{flex:1}.direct-market-result-count{display:none}.direct-market-grid{grid-template-columns:1fr}.direct-produce-image{height:190px}.direct-basket-line{grid-template-columns:1fr auto}.direct-basket-line>strong{grid-column:2;justify-self:end}.direct-basket-quantity{grid-column:2;grid-row:1;justify-self:end}}

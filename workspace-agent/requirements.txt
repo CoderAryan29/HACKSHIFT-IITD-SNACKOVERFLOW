@@ -9,3 +9,4 @@ psycopg[binary,pool]
 sqlalchemy
 python-dotenv
 httpx
+firebase-admin>=6.5

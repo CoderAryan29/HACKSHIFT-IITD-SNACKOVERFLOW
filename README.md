@@ -4,14 +4,18 @@
 
 KisanSetu is a hackathon project designed to help farmers access agricultural insights through machine learning, crop disease identification, and market-price information.
 
-> **Project status:** Initial setup and development. ML training, evaluation, and deployment are pending implementation and verification.
+> **Project status:** The frontend and a unified local FastAPI backend are implemented. Full authenticated chat requires Firebase configuration, and agent responses require database/Gemini credentials. The cached disease model is used when available locally; real-world model accuracy has not been established here.
+
+## Unified local backend
+
+The core API, cached TFLite disease model, and authenticated agricultural agent can be run by one FastAPI server. See [docs/unified-local-backend.md](docs/unified-local-backend.md) for setup, Firebase credentials, the database migration, route map, and PowerShell run commands.
 
 ## 🎯 Project Goals
 
 - Identify plant diseases from leaf images.
 - Provide disease predictions with confidence scores.
 - Support tomato and potato disease detection in the initial demo.
-- Prepare model inference for integration with the application.
+- Connect the existing TFLite model to image-based disease prediction.
 - Process mandi price data for agricultural price insights.
 - Evaluate model performance on unseen images before deployment.
 
@@ -19,27 +23,15 @@ KisanSetu is a hackathon project designed to help farmers access agricultural in
 
 The ML module is developed inside `workspace-ml/`.
 
-### Planned Technology Stack
+### Current inference integration
 
 - **Python:** 3.13
-- **PyTorch and torchvision:** Model training and image processing
-- **timm:** Pretrained image classification architectures
-- **scikit-learn:** Model evaluation
-- **Pillow and NumPy:** Image processing and numerical operations
-- **ONNX and ONNX Runtime:** Model export and inference
+- **TensorFlow Lite CPU:** Runtime for the existing cached model.
+- **Pillow and NumPy:** RGB image decoding, 384 × 384 resize, and tensor preparation.
+- **Model source:** `animeshakr/plant-disease-efficientnetv2s`, resolved from the local Hugging Face cache only.
+- **Prediction API:** `workspace-ml/ml_service/api.py`, mounted by the unified FastAPI app at `POST /predict`.
 
-### Planned Model Pipeline
-
-1. Download and inspect labelled plant disease datasets.
-2. Prepare image preprocessing and augmentation.
-3. Fine-tune a pretrained EfficientNet-B0 classifier.
-4. Evaluate using top-1 accuracy, macro-F1, and a confusion matrix.
-5. Test performance on field-style images.
-6. Calibrate prediction confidence using validation data.
-7. Export the trained model to ONNX.
-8. Integrate the inference module with the application.
-
-The architecture and pipeline are planned choices. Final model performance will be reported only after actual evaluation.
+The empty ONNX placeholder is not used. The API reports model readiness separately and does not substitute or fabricate predictions when the local model or labels are unavailable. Returned model scores are not a guarantee of diagnosis or measured field accuracy; confirm suspected disease with a qualified agricultural expert.
 
 ## 📂 Project Structure
 
@@ -221,4 +213,3 @@ Open a pull request for review before merging into `main`. Coordinate shared int
 - [ ] Train and evaluate the first baseline model.
 - [ ] Export and verify the ONNX model.
 - [ ] Integrate inference with the application.
-

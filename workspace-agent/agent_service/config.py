@@ -27,7 +27,7 @@ def database_url() -> str:
 
 
 def gemini_model() -> str:
-    return os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+    return os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 
 
 def langsmith_tracing_enabled() -> bool:

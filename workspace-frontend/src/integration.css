@@ -1,0 +1,6 @@
+.user-signout{border:0;background:transparent;color:#718072;padding:6px;font-size:9px;white-space:nowrap}
+.user-signout:hover{color:#b13e34}
+.chat-spinner{animation:chat-spin .85s linear infinite;color:#3d8042}
+.chat-error{margin:0 14px 12px;padding:10px 12px;border-radius:10px;background:#fff2ef;border:1px solid #f0d1cb;color:#9b3830;font-size:11px;line-height:1.5}
+@keyframes chat-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.chat-spinner{animation-duration:1.8s}}
