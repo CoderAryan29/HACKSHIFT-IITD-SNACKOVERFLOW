@@ -11,6 +11,7 @@ from sqlalchemy.exc import IntegrityError
 from agent_service.graph.builder import build_agent
 from agent_service.config import ConfigurationError, configure_langsmith, gemini_model
 from agent_service.api.chat import ChatRequest, _chat_stream, _message_content
+from agent_service.llm.model import get_model
 from agent_service.graph.runtime import get_checkpointer
 from agent_service.tools.price_tools import get_mandi_prices_tool
 from agent_service.tools.weather_tools import get_weather_tool
@@ -202,6 +203,25 @@ def test_gemini_model_uses_configured_model(monkeypatch) -> None:
     monkeypatch.setenv("GEMINI_MODEL", "gemini-3.8-flash")
 
     assert gemini_model() == "gemini-3.8-flash"
+
+
+def test_gemini_model_has_sufficient_stream_timeout(monkeypatch) -> None:
+    captured = {}
+
+    class FakeChatModel:
+        def __init__(self, **kwargs):
+            captured.update(kwargs)
+
+    monkeypatch.setenv("GOOGLE_API_KEY", "test-key")
+    monkeypatch.setattr(
+        "agent_service.llm.model.ChatGoogleGenerativeAI",
+        FakeChatModel,
+    )
+
+    get_model()
+
+    assert captured["timeout"] == 60
+    assert captured["streaming"] is True
 
 
 def test_langsmith_tracing_requires_api_key_when_enabled(monkeypatch) -> None:

@@ -4,3 +4,14 @@
 .chat-error{margin:0 14px 12px;padding:10px 12px;border-radius:10px;background:#fff2ef;border:1px solid #f0d1cb;color:#9b3830;font-size:11px;line-height:1.5}
 @keyframes chat-spin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.chat-spinner{animation-duration:1.8s}}
+.assistant-markdown>:first-child{margin-top:0}
+.assistant-markdown>:last-child{margin-bottom:0}
+.assistant-markdown p,.assistant-markdown ul,.assistant-markdown ol{margin:8px 0}
+.assistant-markdown ul,.assistant-markdown ol{padding-left:22px}
+.assistant-markdown li+li{margin-top:4px}
+.assistant-markdown h1,.assistant-markdown h2,.assistant-markdown h3{font-size:1em;line-height:1.45;margin:12px 0 6px}
+.assistant-markdown table{border-collapse:collapse;display:block;max-width:100%;overflow-x:auto}
+.assistant-markdown th,.assistant-markdown td{border:1px solid #dce5d8;padding:6px 8px;text-align:left}
+.assistant-markdown th{background:#eaf2e6}
+.assistant-markdown code{overflow-wrap:anywhere;background:#e9eee6;border-radius:4px;padding:1px 4px}
+.assistant-markdown pre{overflow-x:auto;background:#e9eee6;border-radius:8px;padding:10px}
